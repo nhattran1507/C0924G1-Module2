@@ -1,6 +1,8 @@
+package Bai_1.Bai_tap;
+
 import java.util.Scanner;
 
-public class Doc_so_thanh_chu {
+public class DocSoThanhChu {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         System.out.print("Nhập số từ 0 - 999: ");

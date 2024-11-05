@@ -1,7 +1,8 @@
+package Bai_1.Bai_tap;
 
 import java.util.Scanner;
 
-public class chuyen_doi_ngoai_te {
+public class ChuyenDoiNgoaiTe {
     public static void main(String[] args) {
         double usd;
         Scanner sc = new Scanner(System.in);
