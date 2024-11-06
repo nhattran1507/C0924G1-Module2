@@ -1,4 +1,4 @@
-package Bai_1.Bai_tap;
+package Bai_2;
 
 public class PrimeNumbers100 {
     public static void main(String[] args) {
