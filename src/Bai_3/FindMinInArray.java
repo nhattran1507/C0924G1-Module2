@@ -7,8 +7,23 @@ public class FindMinInArray {
         Scanner scanner = new Scanner(System.in);
 
         // Bước 1: Khai báo mảng số nguyên với SIZE phần tử
-        System.out.print("Enter the size of the array: ");
-        int size = scanner.nextInt();
+        int size = -1;
+
+        // Yêu cầu người dùng nhập kích thước của mảng, kiểm tra lỗi nhập
+        while (size <= 0) {
+            System.out.print("Enter the size of the array (positive integer): ");
+            if (scanner.hasNextInt()) {
+                size = scanner.nextInt();
+                if (size <= 0) {
+                    System.out.println("Please enter a positive integer.");
+                }
+            } else {
+                System.out.println("Invalid input. Please enter an integer.");
+                scanner.next(); // Xóa ký tự không hợp lệ khỏi bộ đệm
+            }
+        }
+
+        // Tạo mảng với kích thước đã nhập
         int[] array = new int[size];
 
         // Bước 2: Nhập giá trị cho các phần tử trong mảng từ bàn phím

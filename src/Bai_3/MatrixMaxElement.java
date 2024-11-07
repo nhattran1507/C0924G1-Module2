@@ -6,11 +6,35 @@ public class MatrixMaxElement {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
-        // Thu thập kích thước ma trận từ người dùng
-        System.out.print("Enter the number of rows: ");
-        int rows = scanner.nextInt();
-        System.out.print("Enter the number of columns: ");
-        int cols = scanner.nextInt();
+        int rows = -1, cols = -1;
+
+        // Bước 2: Nhập kích thước của ma trận từ người dùng với kiểm tra lỗi
+        while (rows <= 0) {
+            System.out.print("Enter the number of rows (positive integer): ");
+            if (scanner.hasNextInt()) {
+                rows = scanner.nextInt();
+                if (rows <= 0) {
+                    System.out.println("Please enter a positive integer for rows.");
+                }
+            } else {
+                System.out.println("Invalid input. Please enter an integer.");
+                scanner.next(); // Xóa ký tự không phải số nguyên khỏi bộ đệm
+            }
+        }
+
+        while (cols <= 0) {
+            System.out.print("Enter the number of columns (positive integer): ");
+            if (scanner.hasNextInt()) {
+                cols = scanner.nextInt();
+                if (cols <= 0) {
+                    System.out.println("Please enter a positive integer for columns.");
+                }
+            } else {
+                System.out.println("Invalid input. Please enter an integer.");
+                scanner.next(); // Xóa ký tự không phải số nguyên khỏi bộ đệm
+            }
+        }
+
 
         // Tạo và nhập liệu cho ma trận số thực
         double[][] matrix = new double[rows][cols];

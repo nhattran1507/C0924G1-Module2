@@ -5,10 +5,21 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
+        int n = -1;
 
-        // Bước 2: Nhập kích thước của ma trận
-        System.out.print("Nhập kích thước của ma trận vuông: ");
-        int n = scanner.nextInt();
+        // Yêu cầu người dùng nhập kích thước của ma trận vuông và kiểm tra lỗi
+        while (n <= 0) {
+            System.out.print("Nhập kích thước của ma trận vuông (số nguyên dương): ");
+            if (scanner.hasNextInt()) {
+                n = scanner.nextInt();
+                if (n <= 0) {
+                    System.out.println("Vui lòng nhập một số nguyên dương.");
+                }
+            } else {
+                System.out.println("Dữ liệu không hợp lệ. Vui lòng nhập một số nguyên.");
+                scanner.next(); // Xóa ký tự không hợp lệ khỏi bộ đệm
+            }
+        }
 
         // Khởi tạo ma trận
         double[][] matrix = new double[n][n];
