@@ -1,4 +1,4 @@
-package Bai_4;
+package Bai_4.Fan;
 
 public class MainFan {
     public static void main(String[] args) {

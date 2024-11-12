@@ -1,4 +1,4 @@
-package Bai_4;
+package Bai_4.Fan;
 
 public class Fan {
     // Hằng số tốc độ

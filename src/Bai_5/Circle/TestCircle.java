@@ -1,4 +1,6 @@
-package Bai_5;
+package Bai_5.Circle;
+
+import Bai_5.Circle.Circle;
 
 public class TestCircle {
     public static void main(String[] args) {

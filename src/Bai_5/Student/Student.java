@@ -1,4 +1,4 @@
-package Bai_5;
+package Bai_5.Student;
 
 public class Student {
     // Thuộc tính private
@@ -17,15 +17,6 @@ public class Student {
     // Phương thức setClasses có access modifier là public
     public void setClasses(String classes) {
         this.classes = classes;
-    }
-
-    // Các phương thức getter để hiển thị thông tin (nếu cần thiết)
-    public String getName() {
-        return name;
-    }
-
-    public String getClasses() {
-        return classes;
     }
 }
 
