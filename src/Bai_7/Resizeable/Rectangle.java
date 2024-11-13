@@ -1,4 +1,4 @@
-package Bai_7;
+package Bai_7.Resizeable;
 
 public class Rectangle extends Shape implements Resizeable {
     private double width = 1.0;

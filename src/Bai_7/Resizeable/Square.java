@@ -1,4 +1,4 @@
-package Bai_7;
+package Bai_7.Resizeable;
 
 public class Square extends Rectangle implements Resizeable {
     public Square() {

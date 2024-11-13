@@ -1,4 +1,4 @@
-package Bai_7;
+package Bai_7.Resizeable;
 
 import java.util.Random;
 

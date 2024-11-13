@@ -1,4 +1,4 @@
-package Bai_7;
+package Bai_7.Resizeable;
 
 public class Circle extends Shape implements Resizeable {
     private double radius = 1.0;

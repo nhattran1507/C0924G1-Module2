@@ -1,4 +1,4 @@
-package Bai_7;
+package Bai_7.Resizeable;
 
 public class Shape {
     private String color = "green";
