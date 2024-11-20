@@ -5,35 +5,61 @@ import java.util.Scanner;
 import java.util.TreeMap;
 
 public class WordCountTreeMap {
+
     public static void main(String[] args) {
-        // Tạo đối tượng Scanner để nhập văn bản từ người dùng
+
+        String input = getInputText();
+
+        TreeMap<String, Integer> wordCountMap = countWordsAndSpecialChars(input);
+
+        displayWordCount(wordCountMap);
+    }
+
+
+    private static String getInputText() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Nhập văn bản:");
-        String input = scanner.nextLine();
+        return scanner.nextLine().toLowerCase();
+    }
 
-        // Chuyển văn bản thành chữ thường và loại bỏ các ký tự đặc biệt
-        input = input.toLowerCase().replaceAll("[^a-zA-Z0-9\\s]", "");
 
-        // Tách văn bản thành các từ
-        String[] words = input.split("\\s+");
-
-        // Tạo TreeMap để lưu trữ từ và số lần xuất hiện
+    private static TreeMap<String, Integer> countWordsAndSpecialChars(String input) {
         TreeMap<String, Integer> wordCountMap = new TreeMap<>();
+        StringBuilder wordBuilder = new StringBuilder();
 
-        // Duyệt qua các từ trong mảng words
-        for (String word : words) {
-            if (word.isEmpty()) {
-                continue;
+        for (char c : input.toCharArray()) {
+            if (Character.isLetterOrDigit(c)) {
+                wordBuilder.append(c);
+            } else if (Character.isWhitespace(c)) {
+                addWordToMap(wordBuilder.toString(), wordCountMap);
+                wordBuilder.setLength(0);
+            } else {
+                addWordToMap(wordBuilder.toString(), wordCountMap);
+                wordBuilder.setLength(0);
+
+                String specialChar = String.valueOf(c);
+                wordCountMap.put(specialChar, wordCountMap.getOrDefault(specialChar, 0) + 1);
             }
-            // Nếu từ đã tồn tại trong map, tăng giá trị lên 1
-            wordCountMap.put(word, wordCountMap.getOrDefault(word, 0) + 1);
         }
 
-        // Hiển thị các từ và số lần xuất hiện theo thứ tự bảng chữ cái
-        System.out.println("Số lần xuất hiện của các từ:");
+
+        addWordToMap(wordBuilder.toString(), wordCountMap);
+
+        return wordCountMap;
+    }
+
+
+    private static void addWordToMap(String word, TreeMap<String, Integer> wordCountMap) {
+        if (!word.isEmpty()) {
+            wordCountMap.put(word, wordCountMap.getOrDefault(word, 0) + 1);
+        }
+    }
+
+
+    private static void displayWordCount(TreeMap<String, Integer> wordCountMap) {
+        System.out.println("Số lần xuất hiện của từ và ký tự đặc biệt:");
         for (Map.Entry<String, Integer> entry : wordCountMap.entrySet()) {
             System.out.println(entry.getKey() + ": " + entry.getValue());
         }
     }
 }
-
