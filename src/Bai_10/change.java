@@ -20,11 +20,11 @@ public class change {
         }
 
 
-        String nhiphan = "";
+        String nhiPhan = "";
         while (n > 0) {
-            nhiphan = (n % 2) + nhiphan;
+            nhiPhan = (n % 2) + nhiPhan;
             n= n / 2;
         }
-        System.out.println("số hệ nhị phân là " + nhiphan);
+        System.out.println("số hệ nhị phân là " + nhiPhan);
     }
 }
