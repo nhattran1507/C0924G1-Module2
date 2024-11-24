@@ -24,7 +24,6 @@ public class InsertionSortVisualization {
         }
         return array;
     }
-
     public static void insertionSort(int[] array) {
         for (int i = 1; i < array.length; i++) {
             int key = array[i];
@@ -38,7 +37,6 @@ public class InsertionSortVisualization {
             printArray(array);
         }
     }
-
     public static void printArray(int[] array) {
         for (int value : array) {
             System.out.print(value + " ");

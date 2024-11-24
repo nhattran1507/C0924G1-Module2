@@ -3,7 +3,6 @@ package Bai_13;
 public class InsertionSortExample {
 
     public static void main(String[] args) {
-        // Mảng đầu vào
         int[] list = inputArray();
         System.out.println("Mảng ban đầu:");
         printArray(list);
@@ -32,9 +31,6 @@ public class InsertionSortExample {
     }
 
     public static void printArray(int[] list) {
-        for (int value : list) {
-            System.out.print(value + " ");
-        }
-        System.out.println();
+        InsertionSortSteps.displayArray(list);
     }
 }
