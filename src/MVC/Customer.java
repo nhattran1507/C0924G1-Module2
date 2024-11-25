@@ -6,6 +6,12 @@ public class Customer {
     private String email;
 
     public Customer(int id, String name, String email) {
+        if (name == null || name.trim().isEmpty()) {
+            throw new IllegalArgumentException("Name cannot be null or empty");
+        }
+        if (!isValidEmail(email)) {
+            throw new IllegalArgumentException("Invalid email format");
+        }
         this.id = id;
         this.name = name;
         this.email = email;
@@ -25,6 +31,9 @@ public class Customer {
     }
 
     public void setName(String name) {
+        if (name == null || name.trim().isEmpty()) {
+            throw new IllegalArgumentException("Name cannot be null or empty");
+        }
         this.name = name;
     }
 
@@ -33,6 +42,9 @@ public class Customer {
     }
 
     public void setEmail(String email) {
+        if (!isValidEmail(email)) {
+            throw new IllegalArgumentException("Invalid email format");
+        }
         this.email = email;
     }
 
@@ -43,5 +55,9 @@ public class Customer {
                 ", name='" + name + '\'' +
                 ", email='" + email + '\'' +
                 '}';
+    }
+
+    private boolean isValidEmail(String email) {
+        return email != null && email.matches("^[\\w-\\.]+@[\\w-\\.]+\\.[a-zA-Z]{2,}$");
     }
 }

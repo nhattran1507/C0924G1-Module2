@@ -3,46 +3,45 @@ package Bai_14;
 import java.util.Scanner;
 
 public class TriangleValidation {
-
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
+        boolean validInput = false;
 
-        try {
-            // Nhập 3 cạnh của tam giác
-            System.out.print("Nhập cạnh thứ nhất: ");
-            double side1 = scanner.nextDouble();
-            System.out.print("Nhập cạnh thứ hai: ");
-            double side2 = scanner.nextDouble();
-            System.out.print("Nhập cạnh thứ ba: ");
-            double side3 = scanner.nextDouble();
+        while (!validInput) {
+            try {
+                System.out.print("Nhập cạnh thứ nhất: ");
+                double side1 = scanner.nextDouble();
 
-            // Kiểm tra tính hợp lệ của tam giác
-            validateTriangle(side1, side2, side3);
+                System.out.print("Nhập cạnh thứ hai: ");
+                double side2 = scanner.nextDouble();
 
-            // Nếu hợp lệ, in thông báo
-            System.out.println("Ba cạnh tạo thành một tam giác hợp lệ.");
+                System.out.print("Nhập cạnh thứ ba: ");
+                double side3 = scanner.nextDouble();
 
-        } catch (IllegalTriangleException e) {
-            // Xử lý ngoại lệ nếu tam giác không hợp lệ
-            System.out.println("Lỗi: " + e.getMessage());
-        } catch (Exception e) {
-            // Xử lý các lỗi nhập liệu khác (ví dụ nhập ký tự thay vì số)
-            System.out.println("Lỗi: Vui lòng nhập số hợp lệ.");
-        } finally {
-            scanner.close();
+                validateTriangle(side1, side2, side3);
+
+                System.out.println("Ba cạnh tạo thành một tam giác hợp lệ.");
+                validInput = true;
+            } catch (NumberFormatException e) {
+                System.out.println("Lỗi số: " + e.getMessage());
+            } catch (IllegalTriangleException e) {
+                System.out.println("Lỗi tam giác: " + e.getMessage());
+            } catch (Exception e) {
+                System.out.println("Lỗi: Vui lòng nhập số hợp lệ.");
+                scanner.nextLine();
+            }
         }
+
+        scanner.close();
     }
 
-    // Phương thức kiểm tra tam giác
-    public static void validateTriangle(double side1, double side2, double side3) throws IllegalTriangleException {
-        // Kiểm tra nếu cạnh nào âm
+    public static void validateTriangle(double side1, double side2, double side3) throws IllegalTriangleException, NumberFormatException {
         if (side1 <= 0 || side2 <= 0 || side3 <= 0) {
-            throw new IllegalTriangleException("Các cạnh của tam giác phải là số dương.");
+            throw new NumberFormatException("Các cạnh phải là số dương và lớn hơn 0.");
         }
-
-        // Kiểm tra tổng hai cạnh không lớn hơn cạnh còn lại
         if (side1 + side2 <= side3 || side1 + side3 <= side2 || side2 + side3 <= side1) {
             throw new IllegalTriangleException("Tổng hai cạnh bất kỳ phải lớn hơn cạnh còn lại.");
         }
     }
 }
+
