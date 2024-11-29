@@ -104,4 +104,8 @@ public class CustomerController {
         }
         view.printError("Customer with ID: " + updateId + " not found.");
     }
+
+    public boolean isCustomerIdExists(String id) {
+        return false;
+    }
 }
