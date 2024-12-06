@@ -44,11 +44,6 @@ public class HomePurchaseDemandService implements IHomePurchaseDemandService {
 
     }
 
-    @Override
-    public void remove(String id1, String id2) {
-
-    }
-
     // Lấy tất cả các nhu cầu mua nhà
     @Override
     public List<HomePurchaseDemand> getAll() {

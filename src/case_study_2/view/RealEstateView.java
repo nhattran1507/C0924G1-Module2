@@ -55,7 +55,7 @@ public class RealEstateView {
     private void findRealEstateById() {
         System.out.print("Nhập ID bất động sản cần tìm: ");
         String id = scanner.nextLine();
-        RealEstate realEstate = realEstateController.findRealEstateById(id);
+        RealEstate realEstate = (RealEstate) realEstateController.findRealEstateById(id);
         if (realEstate != null) {
             System.out.println("Thông tin bất động sản: " + realEstate);
         }

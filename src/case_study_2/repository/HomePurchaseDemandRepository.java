@@ -1,9 +1,8 @@
 package case_study_2.repository;
 
 import case_study_2.entity.HomePurchaseDemand;
-
 import java.io.*;
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 public class HomePurchaseDemandRepository {
@@ -11,7 +10,7 @@ public class HomePurchaseDemandRepository {
 
     // Lấy tất cả các yêu cầu mua nhà từ file CSV
     public List<HomePurchaseDemand> getAll() {
-        List<HomePurchaseDemand> demandList = new ArrayList<>();
+        List<HomePurchaseDemand> demandList = new LinkedList<>();
         File file = new File(FILE_PATH);
 
         if (!file.exists()) {
@@ -107,7 +106,7 @@ public class HomePurchaseDemandRepository {
     }
 
     // Xóa yêu cầu mua nhà theo Customer ID
-    public boolean removeHomePurchaseDemand(String customerId) {
+    public void removeHomePurchaseDemand(String customerId) {
         List<HomePurchaseDemand> demandList = getAll();
         boolean removed = demandList.removeIf(demand -> demand.getCustomerId().equals(customerId));
 
@@ -118,6 +117,5 @@ public class HomePurchaseDemandRepository {
             System.out.println("Không tìm thấy yêu cầu mua nhà với ID khách hàng: " + customerId);
         }
 
-        return removed;
     }
 }

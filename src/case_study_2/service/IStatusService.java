@@ -7,5 +7,7 @@ import java.util.List;
 public interface IStatusService extends IService<Status, String> {
     List<Status> findByCustomerId(String customerId);
 
-    List<Status> findByRealEstateId(String realEstateId);
+    void update(Status updatedstatus);
+
+    boolean remove(String customerId);
 }

@@ -69,7 +69,8 @@ public class RealEstateRepository {
                     realEstate.getDisadvantages() + "," +
                     realEstate.getPrice());
             bufferedWriter.newLine();
-            System.out.println("Thêm bất động sản thành công!");
+            System.out.println("Ghi vào File thành công!"
+            );
         } catch (IOException e) {
             System.out.println("Lỗi khi ghi dữ liệu vào file: " + e.getMessage());
         }

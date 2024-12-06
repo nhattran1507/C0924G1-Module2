@@ -10,8 +10,14 @@ public class StatusRepository {
 
     // Lấy tất cả các trạng thái từ file
     public List<Status> getAll() {
-        File file = new File(FILE_PATH);
         List<Status> statusList = new LinkedList<>();
+        File file = new File(FILE_PATH);
+
+        if (!file.exists()) {
+            System.out.println("File không tồn tại");
+            return statusList;
+        }
+
         try (BufferedReader bufferedReader = new BufferedReader(new FileReader(file))) {
             String line;
             while ((line = bufferedReader.readLine()) != null) {
@@ -28,8 +34,6 @@ public class StatusRepository {
                     System.out.println("Dữ liệu không hợp lệ: " + line);
                 }
             }
-        } catch (FileNotFoundException e) {
-            System.out.println("Không tìm thấy file " + FILE_PATH);
         } catch (IOException e) {
             System.out.println("Lỗi đọc file " + FILE_PATH);
         }
@@ -37,9 +41,9 @@ public class StatusRepository {
     }
 
     // Ghi các trạng thái vào file
-    private void writeFile(List<Status> statusList, boolean append) {
+    private void writeFile(List<Status> statusList) {
         File file = new File(FILE_PATH);
-        try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file, append))) {
+        try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file, false))) {
             for (Status status : statusList) {
                 bufferedWriter.write(status.getCustomerId() + "," +
                         status.getrealEstateId() + "," +
@@ -47,85 +51,63 @@ public class StatusRepository {
                 bufferedWriter.newLine();
             }
         } catch (IOException e) {
-            System.out.println("Lỗi khi ghi dữ liệu vào file");
+            System.out.println("Lỗi khi ghi dữ liệu vào file" + e.getMessage());
         }
     }
 
     // Thêm một trạng thái mới
     public void addStatus(Status status) {
-        File file = new File(FILE_PATH);
-        try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file, true))) {
-            bufferedWriter.write(status.getCustomerId() + "," +
-                    status.getrealEstateId() + "," +
-                    status.getPreferenceLevel());
-            bufferedWriter.newLine();
-            System.out.println("Thêm trạng thái thành công!");
-        } catch (IOException e) {
-            System.out.println("Lỗi khi ghi dữ liệu vào file: " + e.getMessage());
+        if (status == null) {
+            System.out.println("Dữ liệu cập nhật không hợp lệ");
+            return;
         }
+        List<Status> statusList = getAll();
+        statusList.add(status);
+        writeFile(statusList);
+        System.out.println("Thêm trạng thái thành công");
     }
 
     // Tìm trạng thái theo customerId
-    public List<Status> findStatusByCustomerId(String customerId) {
-        List<Status> result = new LinkedList<>();
-        List<Status> statusList = getAll();
-        for (Status st : statusList) {
-            if (st.getCustomerId().equals(customerId)) {
-                result.add(st);
-            }
-        }
-        return result;
-    }
-
-    // Tìm trạng thái theo realEstateId
-    public List<Status> findStatusByRealEstateId(String realEstateId) {
-        List<Status> result = new LinkedList<>();
-        List<Status> statusList = getAll();
-        for (Status st : statusList) {
-            if (st.getrealEstateId().equals(realEstateId)) {
-                result.add(st);
-            }
-        }
-        return result;
+    public Status findStatusByCustomerId(String customerId) {
+        return getAll().stream()
+                .filter(status -> status.getCustomerId().equals(customerId))
+                .findFirst()
+                .orElse(null);
     }
 
     // Cập nhật trạng thái của khách hàng theo customerId và realEstateId
-    public void updateStatus(String customerId, String realEstateId, int preferenceLevel) {
+    public void updateStatus(Status upstatus) {
+        if (upstatus == null || upstatus.getCustomerId() == null || upstatus.getrealEstateId() == null) {
+            System.out.println("Dữ liệu cập nhật không thành công");
+            return;
+        }
+
         List<Status> statusList = getAll();
         boolean found = false;
-        for (Status st : statusList) {
-            if (st.getCustomerId().equals(customerId) && st.getrealEstateId().equals(realEstateId)) {
-                st.setPreferenceLevel(preferenceLevel);
+        for (int i = 0; i < statusList.size(); i++) {
+            if (statusList.get(i).getCustomerId().equals(upstatus.getCustomerId())) {
+                statusList.set(i, upstatus);
                 found = true;
                 break;
             }
         }
-        if (!found) {
-            System.out.println("Không tìm thấy trạng thái với Customer ID và Real Estate ID tương ứng.");
+        if (found) {
+            writeFile(statusList);
+            System.out.println("Cập nhật trạng thái thành công.");
         } else {
-            writeFile(statusList, false);
+            System.out.println("Không tìm thấy yêu cầu trạng thái với ID khách hàng: " + upstatus.getCustomerId());
         }
     }
 
     // Xóa trạng thái theo customerId và realEstateId
-    public void removeStatus(String customerId, String realEstateId) {
+    public void removeStatus(String customerId) {
         List<Status> statusList = getAll();
-        boolean removed = statusList.removeIf(st -> st.getCustomerId().equals(customerId) && st.getrealEstateId().equals(realEstateId));
-        if (!removed) {
-            System.out.println("Không tìm thấy trạng thái với Customer ID và Real Estate ID tương ứng.");
+        boolean removed = statusList.removeIf(status-> status.getCustomerId().equals(customerId) );
+        if (removed) {
+            writeFile(statusList);
+            System.out.println("Xóa thành công.");
         } else {
-            writeFile(statusList, false);
+            System.out.println("Không tìm thấy yêu cầu mua nhà với ID khách hàng: " + customerId);
         }
-    }
-
-    // Tìm trạng thái theo customerId và realEstateId
-    public Status findStatusByCustomerIdAndRealEstateId(String customerId, String realEstateId) {
-        List<Status> statusList = getAll();
-        for (Status st : statusList) {
-            if (st.getCustomerId().equals(customerId) && st.getrealEstateId().equals(realEstateId)) {
-                return st;
-            }
-        }
-        return null; // Trả về null nếu không tìm thấy
     }
 }

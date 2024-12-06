@@ -25,11 +25,6 @@ public class CustomerService implements ICustomerService {
     }
 
     @Override
-    public void remove(String id1, String id2) {
-
-    }
-
-    @Override
     public void update(Customer customer) {
         repository.updateCustomer(customer);
     }

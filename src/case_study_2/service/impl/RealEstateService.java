@@ -25,11 +25,6 @@ public class RealEstateService implements IRealEstateService {
     }
 
     @Override
-    public void remove(String id1, String id2) {
-
-    }
-
-    @Override
     public void update(RealEstate realEstate) {
         repository.updateRealEstate(realEstate);
     }
