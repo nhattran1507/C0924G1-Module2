@@ -8,13 +8,11 @@ import java.util.List;
 public class CustomerController {
     private final CustomerRepository customerRepository = new CustomerRepository();
 
-    // Thêm khách hàng mới
     public void addCustomer(Customer customer) {
         customerRepository.addCustomer(customer);
         System.out.println("Khách hàng đã được thêm thành công.");
     }
 
-    // Tìm khách hàng theo ID
     public Customer findCustomerById(String id) {
         Customer customer = customerRepository.findCustomerById(id);
         if (customer == null) {
@@ -23,7 +21,6 @@ public class CustomerController {
         return customer;
     }
 
-    // Hiển thị tất cả khách hàng
     public List<Customer> getAllCustomers() {
         List<Customer> customers = customerRepository.getAll();
         if (customers.isEmpty()) {
@@ -32,7 +29,6 @@ public class CustomerController {
         return customers;
     }
 
-    // Xóa khách hàng theo ID
     public void removeCustomer(String id) {
         customerRepository.removeCustomer(id);
         System.out.println("Khách hàng với ID " + id + " đã được xóa.");

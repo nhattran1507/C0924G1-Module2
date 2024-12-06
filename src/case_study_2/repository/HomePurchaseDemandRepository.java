@@ -8,7 +8,6 @@ import java.util.List;
 public class HomePurchaseDemandRepository {
     private static final String FILE_PATH = "src/case_study_2/data/HomePurchaseDemand.csv";
 
-    // Lấy tất cả các yêu cầu mua nhà từ file CSV
     public List<HomePurchaseDemand> getAll() {
         List<HomePurchaseDemand> demandList = new LinkedList<>();
         File file = new File(FILE_PATH);
@@ -40,7 +39,6 @@ public class HomePurchaseDemandRepository {
         return demandList;
     }
 
-    // Ghi danh sách yêu cầu mua nhà vào file CSV
     private void writeFile(List<HomePurchaseDemand> demandList) {
         File file = new File(FILE_PATH);
 
@@ -58,7 +56,6 @@ public class HomePurchaseDemandRepository {
         }
     }
 
-    // Thêm yêu cầu mua nhà mới
     public void addHomePurchaseDemand(HomePurchaseDemand demand) {
         if (demand == null) {
             System.out.println("Dữ liệu yêu cầu mua nhà không hợp lệ.");
@@ -71,7 +68,6 @@ public class HomePurchaseDemandRepository {
         System.out.println("Thêm yêu cầu mua nhà thành công.");
     }
 
-    // Tìm yêu cầu mua nhà theo Customer ID
     public HomePurchaseDemand findDemandByCustomerId(String customerId) {
         return getAll().stream()
                 .filter(demand -> demand.getCustomerId().equals(customerId))
@@ -79,7 +75,6 @@ public class HomePurchaseDemandRepository {
                 .orElse(null);
     }
 
-    // Cập nhật yêu cầu mua nhà
     public void updateHomePurchaseDemand(HomePurchaseDemand demand) {
         if (demand == null || demand.getCustomerId() == null) {
             System.out.println("Dữ liệu cập nhật không hợp lệ.");
@@ -105,7 +100,6 @@ public class HomePurchaseDemandRepository {
         }
     }
 
-    // Xóa yêu cầu mua nhà theo Customer ID
     public void removeHomePurchaseDemand(String customerId) {
         List<HomePurchaseDemand> demandList = getAll();
         boolean removed = demandList.removeIf(demand -> demand.getCustomerId().equals(customerId));

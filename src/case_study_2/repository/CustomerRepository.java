@@ -9,7 +9,6 @@ import java.util.List;
 public class CustomerRepository {
     private static final String FILE_PATH = "src/case_study_2/data/Customer.csv";
 
-    // Lấy danh sách tất cả khách hàng
     public List<Customer> getAll() {
         File file = new File(FILE_PATH);
         List<Customer> customers = new LinkedList<>();
@@ -39,7 +38,6 @@ public class CustomerRepository {
         return customers;
     }
 
-    // Ghi danh sách khách hàng vào file (overwrite hoặc append)
     private void writeFile(List<Customer> customers, boolean append) {
         File file = new File(FILE_PATH);
         try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file, append))) {
@@ -53,7 +51,6 @@ public class CustomerRepository {
         }
     }
 
-    // Thêm một khách hàng mới
     public void addCustomer(Customer customer) {
         try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(FILE_PATH, true))) {
             bufferedWriter.write(customer.getId() + "," + customer.getFullName() + ","
@@ -65,7 +62,6 @@ public class CustomerRepository {
         }
     }
 
-    // Tìm khách hàng bằng ID
     public Customer findCustomerById(String id) {
         List<Customer> customers = getAll();
         for (Customer customer : customers) {
@@ -76,7 +72,6 @@ public class CustomerRepository {
         return null;
     }
 
-    // Xóa khách hàng theo ID
     public void removeCustomer(String id) {
         List<Customer> customers = getAll();
         boolean removed = customers.removeIf(customer -> customer.getId().equalsIgnoreCase(id));
@@ -88,7 +83,6 @@ public class CustomerRepository {
         }
     }
 
-    // Cập nhật thông tin khách hàng
     public void updateCustomer(Customer updatedCustomer) {
         List<Customer> customers = getAll();
         boolean found = false;

@@ -8,7 +8,6 @@ import java.util.List;
 public class StatusRepository {
     private static final String FILE_PATH = "src/case_study_2/data/Status.csv";
 
-    // Lấy tất cả các trạng thái từ file
     public List<Status> getAll() {
         List<Status> statusList = new LinkedList<>();
         File file = new File(FILE_PATH);
@@ -40,7 +39,6 @@ public class StatusRepository {
         return statusList;
     }
 
-    // Ghi các trạng thái vào file
     private void writeFile(List<Status> statusList) {
         File file = new File(FILE_PATH);
         try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file, false))) {
@@ -55,7 +53,6 @@ public class StatusRepository {
         }
     }
 
-    // Thêm một trạng thái mới
     public void addStatus(Status status) {
         if (status == null) {
             System.out.println("Dữ liệu cập nhật không hợp lệ");
@@ -67,7 +64,6 @@ public class StatusRepository {
         System.out.println("Thêm trạng thái thành công");
     }
 
-    // Tìm trạng thái theo customerId
     public Status findStatusByCustomerId(String customerId) {
         return getAll().stream()
                 .filter(status -> status.getCustomerId().equals(customerId))
@@ -75,7 +71,6 @@ public class StatusRepository {
                 .orElse(null);
     }
 
-    // Cập nhật trạng thái của khách hàng theo customerId và realEstateId
     public void updateStatus(Status upstatus) {
         if (upstatus == null || upstatus.getCustomerId() == null || upstatus.getrealEstateId() == null) {
             System.out.println("Dữ liệu cập nhật không thành công");
@@ -99,7 +94,6 @@ public class StatusRepository {
         }
     }
 
-    // Xóa trạng thái theo customerId và realEstateId
     public void removeStatus(String customerId) {
         List<Status> statusList = getAll();
         boolean removed = statusList.removeIf(status-> status.getCustomerId().equals(customerId) );

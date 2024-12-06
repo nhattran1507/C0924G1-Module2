@@ -8,12 +8,10 @@ import java.util.List;
 public class StatusController {
     private final StatusService statusService;
 
-    // Constructor để khởi tạo StatusService
     public StatusController(StatusService statusService) {
         this.statusService = statusService;
     }
 
-    // Phương thức thêm trạng thái
     public void addStatus(Status status) {
         if (status != null) {
             statusService.add(status);
@@ -31,7 +29,6 @@ public class StatusController {
         return statusList;
     }
 
-    // Phương thức tìm trạng thái của khách hàng theo CustomerId
     public List<Status> findStatusByCustomerId(String customerId) {
         List<Status> statuses = statusService.findByCustomerId(customerId);
         if (statuses == null) {
@@ -40,7 +37,6 @@ public class StatusController {
         return statuses;
     }
 
-    // Phương thức cập nhật trạng thái của khách hàng đối với bất động sản
     public void updateStatus(Status updatedstatus) {
         if (updatedstatus == null || updatedstatus.getCustomerId() == null || updatedstatus.getrealEstateId() == null) {
             System.out.println("Dữ liệu cập nhật không hợp lệ");

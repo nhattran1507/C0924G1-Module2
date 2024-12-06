@@ -32,7 +32,6 @@ public class HomePurchaseDemandController {
         return demands;
     }
 
-    // Tìm nhu cầu mua nhà theo Customer ID
     public HomePurchaseDemand findHomePurchaseById(String id) {
         HomePurchaseDemand demand = homePurchaseDemandService.findById(id);
         if (demand == null) {
@@ -41,7 +40,6 @@ public class HomePurchaseDemandController {
         return demand;
     }
 
-    // Cập nhật một nhu cầu mua nhà
     public void updateHomePurchaseDemand(HomePurchaseDemand updatedDemand) {
         if (updatedDemand == null || updatedDemand.getCustomerId() == null) {
             System.out.println("Dữ liệu cập nhật không hợp lệ.");
@@ -56,12 +54,10 @@ public class HomePurchaseDemandController {
         }
     }
 
-    // Kiểm tra ID khách hàng có tồn tại không
     public boolean checkCustomerId(String customerId) {
         return homePurchaseDemandService.isCustomerExists(customerId);
     }
 
-    // Xóa một nhu cầu mua nhà
     public boolean removeHomePurchaseDemand(String customerId) {
         if (homePurchaseDemandService.remove(customerId)) {
             System.out.println("Nhu cầu mua nhà đã được xóa thành công.");

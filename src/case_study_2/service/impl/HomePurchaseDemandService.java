@@ -44,30 +44,25 @@ public class HomePurchaseDemandService implements IHomePurchaseDemandService {
 
     }
 
-    // Lấy tất cả các nhu cầu mua nhà
     @Override
     public List<HomePurchaseDemand> getAll() {
         return demandRepository.getAll();
     }
 
-    // Cập nhật nhu cầu mua nhà
     @Override
     public void update(HomePurchaseDemand demand) {
         demandRepository.updateHomePurchaseDemand(demand);
     }
 
-    // Xóa nhu cầu mua nhà theo ID khách hàng
     @Override
     public boolean remove(String customerId) {
         HomePurchaseDemand existingDemand = demandRepository.findDemandByCustomerId(customerId);
         if (existingDemand != null) {
             demandRepository.removeHomePurchaseDemand(customerId);
-            return true; // Xóa thành công
+            return true;
         }
-        return false; // Không tìm thấy
+        return false;
     }
-
-    // Kiểm tra sự tồn tại của ID khách hàng
     public boolean isCustomerExists(String customerId) {
         Customer customer = customerRepository.findCustomerById(customerId);
         return customer != null;

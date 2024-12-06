@@ -37,12 +37,11 @@ public class StatusService implements IStatusService {
 
     @Override
     public List<Status> findById(String id) {
-        return statusRepository.findStatusByCustomerId(id); // Hoặc thực hiện tìm theo realEstateId
+        return statusRepository.findStatusByCustomerId(id);
     }
 
     @Override
     public void update(String customerId, String realEstateId, int preferenceLevel) {
-        // Cập nhật trạng thái của khách hàng đối với bất động sản
         Status status = statusRepository.findStatusByCustomerId(customerId);
         if (status != null) {
             status.setPreferenceLevel(preferenceLevel);

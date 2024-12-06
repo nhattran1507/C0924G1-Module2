@@ -6,21 +6,18 @@ import java.util.List;
 import java.util.ListIterator;
 
 public class Status implements List<Status> {
-    private String customerId;  // ID khách hàng
-    private String realEstateId;  // ID bất động sản
-    private int preferenceLevel;  // Mức độ ưu tiên của khách hàng đối với bất động sản (ví dụ: 1 - cao, 2 - trung bình, 3 - thấp)
+    private String customerId;
+    private String realEstateId;
+    private int preferenceLevel;
 
-    // Constructor mặc định
     public Status() {}
 
-    // Constructor với tham số
     public Status(String customerId, String realEstateId, int preferenceLevel) {
         this.customerId = customerId;
         this.realEstateId = realEstateId;
         this.preferenceLevel = preferenceLevel;
     }
 
-    // Getter và Setter cho các trường
     public String getCustomerId() {
         return customerId;
     }
@@ -45,7 +42,7 @@ public class Status implements List<Status> {
         this.preferenceLevel = preferenceLevel;
     }
 
-    // Phương thức toString() để hiển thị đối tượng dưới dạng chuỗi
+
     @Override
     public String toString() {
         return "Status{" +
