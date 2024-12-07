@@ -2,6 +2,7 @@ package case_study_2.view;
 
 import case_study_2.controller.CustomerController;
 import case_study_2.entity.Customer;
+
 import java.util.List;
 import java.util.Scanner;
 
@@ -11,49 +12,110 @@ public class CustomerView {
 
     public void menu() {
         while (true) {
-            System.out.println("\n--- Quản Lý Khách Hàng ---");
+            System.out.println("\n--- Quản lý khách hàng ---");
             System.out.println("1. Thêm khách hàng");
-            System.out.println("2. Tìm kiếm khách hàng theo ID");
-            System.out.println("3. Hiển thị tất cả khách hàng");
-            System.out.println("4. Xóa khách hàng theo ID");
-            System.out.println("5. Quay lại");
+            System.out.println("2. Sửa khách hàng");
+            System.out.println("3. Xóa khách hàng");
+            System.out.println("4. Hiển thị danh sách khách hàng");
+            System.out.println("5. Quay lại menu chính");
             System.out.print("Lựa chọn của bạn: ");
-            int choice = Integer.parseInt(scanner.nextLine());
 
-            switch (choice) {
-                case 1 -> addCustomer();
-                case 2 -> findCustomerById();
-                case 3 -> displayAllCustomers();
-                case 4 -> removeCustomer();
-                case 5 -> {
-                    return;
+            try {
+                int choice = Integer.parseInt(scanner.nextLine());
+                switch (choice) {
+                    case 1 -> addCustomer();
+                    case 2 -> updateCustomer();
+                    case 3 -> removeCustomer();
+                    case 4 -> displayAllCustomers();
+                    case 5 -> {
+                        System.out.println("Quay lại menu chính...");
+                        return;
+                    }
+                    default -> System.out.println("Lựa chọn không hợp lệ. Vui lòng thử lại.");
                 }
-                default -> System.out.println("Lựa chọn không hợp lệ.");
+            } catch (NumberFormatException e) {
+                System.out.println("Vui lòng nhập một số hợp lệ.");
             }
         }
     }
 
     private void addCustomer() {
-        System.out.print("Nhập ID khách hàng: ");
-        String id = scanner.nextLine();
+        String id;
+        while (true) {
+            System.out.print("Nhập ID khách hàng: ");
+            id = scanner.nextLine();
+            if (customerController.findCustomerById(id) != null) {
+                System.out.println("ID đã tồn tại trong hệ thống. Vui lòng nhập lại.");
+            } else {
+                break;
+            }
+        }
         System.out.print("Nhập tên khách hàng: ");
         String name = scanner.nextLine();
-        System.out.print("Nhập số điện thoại: ");
-        String phone = scanner.nextLine();
+        System.out.print("Nhập số điện thoại (10 chữ số): ");
+        String phone;
+        while (true) {
+            phone = scanner.nextLine();
+            if (phone.matches("\\d{10}")) {
+                break;
+            } else {
+                System.out.print("Số điện thoại không hợp lệ. Vui lòng nhập lại (10 chữ số): ");
+            }
+        }
         System.out.print("Nhập địa chỉ: ");
         String address = scanner.nextLine();
 
+        // Kiểm tra nếu khách hàng đã tồn tại
+        Customer existingCustomer = customerController.checkCustomer(name, phone, address);
+        if (existingCustomer != null) {
+            System.out.println("Khách hàng đã tồn tại trong hệ thống với ID: " + existingCustomer.getId());
+            return; // Quay lại menu trước đó
+        }
         Customer customer = new Customer(id, name, phone, address);
         customerController.addCustomer(customer);
     }
 
-    private void findCustomerById() {
-        System.out.print("Nhập ID khách hàng cần tìm: ");
+    private void updateCustomer() {
+        System.out.print("Nhập ID khách hàng cần sửa: ");
         String id = scanner.nextLine();
-        Customer customer = customerController.findCustomerById(id);
-        if (customer != null) {
-            System.out.println("Thông tin khách hàng: " + customer);
+        Customer existingCustomer = customerController.findCustomerById(id);
+        if (existingCustomer == null) {
+            System.out.println("Không tìm thấy khách hàng với ID này.");
+            return;
         }
+        System.out.println("Thông tin khách hàng hiện tại: ");
+        System.out.println(existingCustomer);
+        System.out.print("Nhập tên khách hàng mới (bỏ qua để giữ nguyên): ");
+        String name = scanner.nextLine();
+        if (!name.trim().isEmpty()) {
+            existingCustomer.setFullName(name);
+        }
+        System.out.print("Nhập số điện thoại mới (10 chữ số)(bỏ qua để giữ nguyên: ");
+        String phone;
+        while (true) {
+            phone = scanner.nextLine();
+            if (phone.matches("\\d{10}")) { // Kiểm tra nếu phone chỉ chứa đúng 10 chữ số
+                break; // Thoát khỏi vòng lặp nếu nhập đúng
+            } else {
+                System.out.print("Số điện thoại không hợp lệ. Vui lòng nhập lại (10 chữ số): ");
+            }
+        }
+        if (!phone.trim().isEmpty()) {
+            existingCustomer.setPhoneNumber(phone);
+        }
+        System.out.print("Nhập địa chỉ mới (bỏ qua để giữ nguyên): ");
+        String address = scanner.nextLine();
+        if (!address.trim().isEmpty()) {
+            existingCustomer.setAddress(address);
+        }
+        customerController.updateCustomer(existingCustomer);
+        System.out.println("Thông tin khách hàng đã được cập nhật.");
+    }
+
+    private void removeCustomer() {
+        System.out.print("Nhập ID khách hàng cần xóa: ");
+        String id = scanner.nextLine();
+        customerController.removeCustomer(id);
     }
 
     private void displayAllCustomers() {
@@ -61,11 +123,5 @@ public class CustomerView {
         for (Customer customer : customers) {
             System.out.println(customer);
         }
-    }
-
-    private void removeCustomer() {
-        System.out.print("Nhập ID khách hàng cần xóa: ");
-        String id = scanner.nextLine();
-        customerController.removeCustomer(id);
     }
 }

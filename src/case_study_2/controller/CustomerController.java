@@ -33,4 +33,17 @@ public class CustomerController {
         customerRepository.removeCustomer(id);
         System.out.println("Khách hàng với ID " + id + " đã được xóa.");
     }
+
+    public void updateCustomer(Customer updatedCustomer) {
+        boolean isUpdated = customerRepository.updateCustomer(updatedCustomer);
+        if (isUpdated) {
+            System.out.println("Thông tin khách hàng đã được cập nhật thành công.");
+        } else {
+            System.out.println("Cập nhật thất bại. Không tìm thấy khách hàng với ID: " + updatedCustomer.getId());
+        }
+    }
+    public Customer checkCustomer(String name, String phone, String address) {
+        customerRepository.findCustomerByDetails(name, phone, address);
+        return customerRepository.findCustomerByDetails(name, phone, address);
+    }
 }

@@ -83,7 +83,7 @@ public class CustomerRepository {
         }
     }
 
-    public void updateCustomer(Customer updatedCustomer) {
+    public boolean updateCustomer(Customer updatedCustomer) {
         List<Customer> customers = getAll();
         boolean found = false;
 
@@ -101,5 +101,16 @@ public class CustomerRepository {
         } else {
             System.out.println("Không tìm thấy khách hàng với ID: " + updatedCustomer.getId());
         }
+        return found;
+    }
+    public Customer findCustomerByDetails(String name, String phone, String address) {
+        for (Customer customer : getAll()) {
+            if (customer.getFullName().equalsIgnoreCase(name) &&
+                    customer.getPhoneNumber().equals(phone) &&
+                    customer.getAddress().equalsIgnoreCase(address)) {
+                return customer; // Trả về khách hàng nếu tìm thấy
+            }
+        }
+        return null; // Không tìm thấy khách hàng nào
     }
 }

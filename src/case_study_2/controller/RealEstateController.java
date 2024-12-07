@@ -30,8 +30,9 @@ public class RealEstateController {
         return realEstates;
     }
 
-    public void removeRealEstate(String id) {
+    public boolean removeRealEstate(String id) {
         realEstatesRepository.removeRealEstate(id);
         System.out.println("Bất động sản với ID " + id + " đã được xóa.");
+        return false;
     }
 }

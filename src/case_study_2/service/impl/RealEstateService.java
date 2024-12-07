@@ -21,7 +21,6 @@ public class RealEstateService implements IRealEstateService {
 
     @Override
     public void update(String id1, String id2, int preferenceLevel) {
-
     }
 
     @Override

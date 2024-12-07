@@ -14,14 +14,9 @@ public class HomePurchaseDemandView {
     private final Scanner scanner = new Scanner(System.in);
 
     public HomePurchaseDemandView() {
-        // Khởi tạo các repository
         CustomerRepository customerRepository = new CustomerRepository();
         HomePurchaseDemandRepository homePurchaseDemandRepository = new HomePurchaseDemandRepository();
-
-        // Khởi tạo HomePurchaseDemandService
         HomePurchaseDemandService homePurchaseDemandService = new HomePurchaseDemandService(homePurchaseDemandRepository, customerRepository);
-
-        // Khởi tạo HomePurchaseDemandController
         this.homePurchaseDemandController = new HomePurchaseDemandController(homePurchaseDemandService);
     }
 
@@ -60,9 +55,31 @@ public class HomePurchaseDemandView {
         System.out.print("Nhập ID khách hàng: ");
         String customerId = scanner.nextLine();
 
-        if (!homePurchaseDemandController.checkCustomerId(customerId)) {
-            System.out.println("ID khách hàng không tồn tại. Vui lòng thử lại.");
+        while (true) {
+            System.out.print("Nhập ID khách hàng (hoặc gõ 'exit' để thoát): ");
+            customerId = scanner.nextLine();
+            if (customerId.equalsIgnoreCase("exit")) {
+                System.out.println("Bạn đã yêu cầu thoát. Quay lại menu chính...");
+                return;
+            }
+            if (homePurchaseDemandController.checkCustomerId(customerId)) {
+                break;
+            } else {
+                System.out.println("ID khách hàng không tồn tại. Vui lòng thử lại.");
+            }
+        }
+        if (homePurchaseDemandController.checkId(customerId)) {
+            System.out.println("ID khách hàng đã có trong tệp HomePurchaseDemand.csv.");
+            System.out.print("Bạn có muốn cập nhật nhu cầu mua nhà không? (y/n): ");
+            String choice = scanner.nextLine();
+            if (choice.equalsIgnoreCase("y")) {
+                updateHomePurchaseDemand();
+            } else {
+                System.out.println("Không thực hiện cập nhật.");
             return;
+            }
+        } else {
+            System.out.println("ID khách hàng hợp lệ nhưng chưa có trong nhu cầu mua nhà.");
         }
 
         System.out.print("Nhập tài chính mua nhà: ");

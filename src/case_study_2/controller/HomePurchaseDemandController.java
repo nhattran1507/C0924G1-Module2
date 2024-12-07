@@ -8,12 +8,10 @@ import java.util.List;
 public class HomePurchaseDemandController {
     private final HomePurchaseDemandService homePurchaseDemandService;
 
-    // Constructor nhận đối tượng HomePurchaseDemandService từ bên ngoài
     public HomePurchaseDemandController(HomePurchaseDemandService homePurchaseDemandService) {
         this.homePurchaseDemandService = homePurchaseDemandService;
     }
 
-    // Thêm một nhu cầu mua nhà mới
     public void addHomePurchaseDemand(HomePurchaseDemand homePurchaseDemand) {
         if (homePurchaseDemand != null) {
             homePurchaseDemandService.add(homePurchaseDemand);
@@ -56,6 +54,9 @@ public class HomePurchaseDemandController {
 
     public boolean checkCustomerId(String customerId) {
         return homePurchaseDemandService.isCustomerExists(customerId);
+    }
+    public boolean checkId(String id) {
+        return homePurchaseDemandService.isCustomerIdInDemandFile(id);
     }
 
     public boolean removeHomePurchaseDemand(String customerId) {
