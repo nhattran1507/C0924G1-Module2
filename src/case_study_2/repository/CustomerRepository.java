@@ -38,9 +38,9 @@ public class CustomerRepository {
         return customers;
     }
 
-    private void writeFile(List<Customer> customers, boolean append) {
+    private void writeFile(List<Customer> customers) {
         File file = new File(FILE_PATH);
-        try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file, append))) {
+        try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file, false))) {
             for (Customer customer : customers) {
                 bufferedWriter.write(customer.getId() + "," + customer.getFullName() + ","
                         + customer.getPhoneNumber() + "," + customer.getAddress());
@@ -76,14 +76,14 @@ public class CustomerRepository {
         List<Customer> customers = getAll();
         boolean removed = customers.removeIf(customer -> customer.getId().equalsIgnoreCase(id));
         if (removed) {
-            writeFile(customers, false);
+            writeFile(customers);
             System.out.println("Đã xóa khách hàng với ID: " + id);
         } else {
             System.out.println("Không tìm thấy khách hàng với ID: " + id);
         }
     }
 
-    public boolean updateCustomer(Customer updatedCustomer) {
+    public void updateCustomer(Customer updatedCustomer) {
         List<Customer> customers = getAll();
         boolean found = false;
 
@@ -96,21 +96,21 @@ public class CustomerRepository {
         }
 
         if (found) {
-            writeFile(customers, false);
+            writeFile(customers);
             System.out.println("Cập nhật thông tin khách hàng thành công.");
         } else {
             System.out.println("Không tìm thấy khách hàng với ID: " + updatedCustomer.getId());
         }
-        return found;
     }
-    public Customer findCustomerByDetails(String name, String phone, String address) {
+
+    public void findCustomerByDetails(String name, String phone, String address) {
         for (Customer customer : getAll()) {
             if (customer.getFullName().equalsIgnoreCase(name) &&
                     customer.getPhoneNumber().equals(phone) &&
                     customer.getAddress().equalsIgnoreCase(address)) {
-                return customer; // Trả về khách hàng nếu tìm thấy
+                return;
             }
         }
-        return null; // Không tìm thấy khách hàng nào
     }
 }
+

@@ -21,7 +21,6 @@ public class HomePurchaseDemandController {
         }
     }
 
-    // Lấy danh sách tất cả các nhu cầu mua nhà
     public List<HomePurchaseDemand> getAllHomePurchaseDemands() {
         List<HomePurchaseDemand> demands = homePurchaseDemandService.getAll();
         if (demands.isEmpty()) {

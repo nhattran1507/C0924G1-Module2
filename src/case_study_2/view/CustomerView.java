@@ -65,11 +65,11 @@ public class CustomerView {
         System.out.print("Nhập địa chỉ: ");
         String address = scanner.nextLine();
 
-        // Kiểm tra nếu khách hàng đã tồn tại
+
         Customer existingCustomer = customerController.checkCustomer(name, phone, address);
         if (existingCustomer != null) {
             System.out.println("Khách hàng đã tồn tại trong hệ thống với ID: " + existingCustomer.getId());
-            return; // Quay lại menu trước đó
+            return;
         }
         Customer customer = new Customer(id, name, phone, address);
         customerController.addCustomer(customer);
@@ -94,8 +94,8 @@ public class CustomerView {
         String phone;
         while (true) {
             phone = scanner.nextLine();
-            if (phone.matches("\\d{10}")) { // Kiểm tra nếu phone chỉ chứa đúng 10 chữ số
-                break; // Thoát khỏi vòng lặp nếu nhập đúng
+            if (phone.matches("\\d{10}")) {
+                break;
             } else {
                 System.out.print("Số điện thoại không hợp lệ. Vui lòng nhập lại (10 chữ số): ");
             }

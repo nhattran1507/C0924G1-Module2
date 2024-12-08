@@ -10,12 +10,11 @@ public class CustomerController {
 
     public void addCustomer(Customer customer) {
         customerRepository.addCustomer(customer);
-        System.out.println("Khách hàng đã được thêm thành công.");
     }
 
     public Customer findCustomerById(String id) {
         Customer customer = customerRepository.findCustomerById(id);
-        if (customer == null) {
+        if (customer.isEmpty()) {
             System.out.println("Không tìm thấy khách hàng với ID: " + id);
         }
         return customer;
@@ -31,19 +30,13 @@ public class CustomerController {
 
     public void removeCustomer(String id) {
         customerRepository.removeCustomer(id);
-        System.out.println("Khách hàng với ID " + id + " đã được xóa.");
     }
 
     public void updateCustomer(Customer updatedCustomer) {
-        boolean isUpdated = customerRepository.updateCustomer(updatedCustomer);
-        if (isUpdated) {
-            System.out.println("Thông tin khách hàng đã được cập nhật thành công.");
-        } else {
-            System.out.println("Cập nhật thất bại. Không tìm thấy khách hàng với ID: " + updatedCustomer.getId());
-        }
+        customerRepository.updateCustomer(updatedCustomer);
     }
     public Customer checkCustomer(String name, String phone, String address) {
         customerRepository.findCustomerByDetails(name, phone, address);
-        return customerRepository.findCustomerByDetails(name, phone, address);
+        return null;
     }
 }
