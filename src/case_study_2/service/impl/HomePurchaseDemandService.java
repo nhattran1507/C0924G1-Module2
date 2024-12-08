@@ -65,17 +65,6 @@ public class HomePurchaseDemandService implements IHomePurchaseDemandService {
         return customer != null;
     }
     public boolean isCustomerIdInDemandFile(String customerId) {
-        try (BufferedReader br = new BufferedReader(new FileReader("src/case_study_2/data/HomePurchaseDemand.csv"))) {
-            String line;
-            while ((line = br.readLine()) != null) {
-                String[] data = line.split(",");
-                if (data[0].equals(customerId)) {
-                    return true;
-                }
-            }
-        } catch (IOException e) {
-            System.err.println("Lỗi khi đọc tệp: " + e.getMessage());
-        }
-        return false;
+        return demandRepository.isCustomerIdInDemandFile(customerId);
     }
 }

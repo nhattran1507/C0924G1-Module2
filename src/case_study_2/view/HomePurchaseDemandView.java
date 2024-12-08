@@ -55,33 +55,35 @@ public class HomePurchaseDemandView {
         System.out.print("Nhập ID khách hàng: ");
         String customerId = scanner.nextLine();
 
-        while (true) {
-            System.out.print("Nhập ID khách hàng (hoặc gõ 'exit' để thoát): ");
+        // Kiểm tra ID khách hàng có trong hệ thống không
+        while (!homePurchaseDemandController.checkCustomerId(customerId)) {
+            System.out.print("ID khách hàng chưa có trong hệ thống. Nhập lại ID khách hàng (hoặc gõ 'exit' để thoát): ");
             customerId = scanner.nextLine();
             if (customerId.equalsIgnoreCase("exit")) {
                 System.out.println("Bạn đã yêu cầu thoát. Quay lại menu chính...");
                 return;
             }
-            if (homePurchaseDemandController.checkCustomerId(customerId)) {
-                break;
-            } else {
-                System.out.println("ID khách hàng không tồn tại. Vui lòng thử lại.");
-            }
         }
+
+        // Kiểm tra ID khách hàng trong file HomePurchaseDemand.csv
         if (homePurchaseDemandController.checkId(customerId)) {
-            System.out.println("ID khách hàng đã có trong tệp HomePurchaseDemand.csv.");
-            System.out.print("Bạn có muốn cập nhật nhu cầu mua nhà không? (y/n): ");
+            System.out.println("Khách hàng đã có nhu cầu mua nhà trong hệ thống. Dưới đây là thông tin:");
+            HomePurchaseDemand existingDemand = homePurchaseDemandController.findHomePurchaseById(customerId);
+            System.out.println(existingDemand);
+
+            System.out.print("Bạn có muốn cập nhật thông tin không? (y/n): ");
             String choice = scanner.nextLine();
             if (choice.equalsIgnoreCase("y")) {
                 updateHomePurchaseDemand();
             } else {
-                System.out.println("Không thực hiện cập nhật.");
-            return;
+                System.out.println("Không thực hiện cập nhật. Quay lại menu chính...");
             }
+            return;
         } else {
-            System.out.println("ID khách hàng hợp lệ nhưng chưa có trong nhu cầu mua nhà.");
+            System.out.println("ID khách hàng hợp lệ nhưng chưa có trong danh sách nhu cầu mua nhà.");
         }
 
+        // Thu thập thông tin mới từ người dùng
         System.out.print("Nhập tài chính mua nhà: ");
         long budget;
         try {
@@ -103,6 +105,7 @@ public class HomePurchaseDemandView {
         HomePurchaseDemand demand = new HomePurchaseDemand(customerId, budget, preferredLocation, preferredDirection, purpose);
         homePurchaseDemandController.addHomePurchaseDemand(demand);
     }
+
 
     private void displayAllHomePurchaseDemands() {
         List<HomePurchaseDemand> demands = homePurchaseDemandController.getAllHomePurchaseDemands();

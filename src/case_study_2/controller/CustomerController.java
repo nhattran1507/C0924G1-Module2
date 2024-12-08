@@ -14,7 +14,7 @@ public class CustomerController {
 
     public Customer findCustomerById(String id) {
         Customer customer = customerRepository.findCustomerById(id);
-        if (customer.isEmpty()) {
+        if (customer == null) {
             System.out.println("Không tìm thấy khách hàng với ID: " + id);
         }
         return customer;

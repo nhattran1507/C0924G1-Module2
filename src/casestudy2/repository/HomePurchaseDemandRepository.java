@@ -44,7 +44,7 @@ public class HomePurchaseDemandRepository {
         return homePurchaseDemandMap;
     }
 
-    private void writfle(Map<String, HomePurchaseDemand> homePurchaseDemandMap, boolean append) {
+    private void writFile(Map<String, HomePurchaseDemand> homePurchaseDemandMap, boolean append) {
         File file = new File(FILE_PATH);
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(file, append))) {
             for (HomePurchaseDemand homePurchaseDemand : homePurchaseDemandMap.values()) {
@@ -63,7 +63,7 @@ public class HomePurchaseDemandRepository {
     public void addHomePruchaseDemand(HomePurchaseDemand homePurchaseDemand) {
         Map<String, HomePurchaseDemand> homePurchaseDemandMap = getAll();
         homePurchaseDemandMap.put(homePurchaseDemand.getId().toLowerCase(), homePurchaseDemand);
-        writfle(homePurchaseDemandMap, false);
+        writFile(homePurchaseDemandMap, false);
         System.out.println("Đã thêm nhu cầu mua nhà với ID Khách hàng: " + homePurchaseDemand.getId());
     }
 
@@ -76,7 +76,7 @@ public class HomePurchaseDemandRepository {
         Map<String, HomePurchaseDemand> homePurchaseDemandMap = getAll();
         if (homePurchaseDemandMap.containsKey(id.toLowerCase())) {
             homePurchaseDemandMap.remove(id.toLowerCase());
-            writfle(homePurchaseDemandMap, false);
+            writFile(homePurchaseDemandMap, false);
             System.out.println("Đã xóa nhu cầu mua nhà với ID khách hàng: " + id);
         } else {
             System.out.println("Không tìm thấy nhu cầu mua nhà với ID khách hàng" + id);
@@ -88,11 +88,12 @@ public class HomePurchaseDemandRepository {
         String id = updateHomePurchaseDemand.getId().toLowerCase();
         if (homePurchaseDemandMap.containsKey(id)) {
             homePurchaseDemandMap.put(id, updateHomePurchaseDemand);
-            writfle(homePurchaseDemandMap, false);
+            writFile(homePurchaseDemandMap, false);
             System.out.println("Cập nhật nhu cầu mua nhà thành công");
         } else {
             System.out.println("Không tìm nhu cầu mua nhà với ID: " + updateHomePurchaseDemand.getId());
         }
     }
+
 }
 
